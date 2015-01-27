@@ -10,6 +10,13 @@
   "author": "Chloe Maurand",
   "license": "Art Libre",
   "dependencies": {
+    "grunt-bower-task": "^0.4.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "load-grunt-tasks": "^3.0.0",
+    "time-grunt": "^1.0.0",
     "xml2js": "^0.4.4"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
   }
 }
