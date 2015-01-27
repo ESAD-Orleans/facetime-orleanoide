@@ -11,14 +11,21 @@ window.requestAnimFrame = (function () {
 
 $(document).ready(function(){
 	//
+	// constants
 	var HOUR_IN_SECONDS = 3600,
 		HOUR_IN_MS = HOUR_IN_SECONDS*1000,
 		DAY_IN_SECONDS = HOUR_IN_SECONDS*24,
 		DAY_IN_MS = DAY_IN_SECONDS*1000,
+		//
+		// starting values
 		SPEED = 1,
 		PLAYING_STATE = true,
 		PLAYING = true;
 	//
+	// random seed
+	Math.seedrandom('this is a random seed !');
+	//
+	// vars
 	var polygons,
 		canvas,
 		context,
@@ -29,22 +36,31 @@ $(document).ready(function(){
 		time = 0
 		;
 		//
+	// polygons data ajax loading
 	$.ajax({url:'polygons.json',dataType:'json'}).done(function(res){
 		polygons = res;
 		Setup();
 	});
 	//
+	// input change binding
 	speed.on('change',function(){
 		SPEED = speed.val();
 	})
 	//
+	// App Setup, after polygons data loading
 	function Setup(){
+		//
+		// setup the canvas
 		canvas = $('canvas').get(0);
 		context = canvas.getContext('2d');
-		var PointsExpr = /(([0-9.-]*),([0-9.-]*))/g;
-		Math.seedrandom('this is a random seed !');
+		//
+		// display in browser console the number of triangles
+		console.log($(polygons).length);
+		//
 		$(polygons).each(function(){
 			var points = [];
+			//
+			// convert string data to floating number points
 			$(this.points.split(' ')).each(function(p){
 				var point = this.split(','),
 					x = parseFloat(point[0]),
@@ -53,22 +69,20 @@ $(document).ready(function(){
 					points[p] = {x:x,y:y};
 				}
 			});
+			//
+			// assign a random center to the polygon
 			this.center = {x:canvas.width*Math.random(),y:canvas.height*Math.random()};
-			this.points = points;
-			context.beginPath();
-			context.fillStyle = this.fill;
-			context.moveTo(this.points[0].x,this.points[0].y)
-			$(this.points).each(function(){
-				context.lineTo(this.x,this.y);
-			});
-			context.closePath();
-			context.fill();
+			//
 		});
+		//
+		// bind playing button
 		playing.on('change',function(){
 			PLAYING_STATE = PLAYING;
 			PLAYING = playing.is(':checked');
 			Draw();
 		});
+		//
+		// initial Drawing
 		Draw();
 	}
 	function Draw(){
@@ -76,12 +90,14 @@ $(document).ready(function(){
 		context.clearRect(0,0,canvas.width,canvas.height);
 		var rX = (time%(HOUR_IN_MS))/ HOUR_IN_MS;
 		//
+		// draw All triangles
 		$(polygons).each(function () {
+			//
 			var polygon = this;
 			context.save();
 			context.beginPath();
-			context.fillStyle = this.fill;
-			context.translate(this.center.x,this.center.y);
+			context.fillStyle = polygon.fill;
+			context.translate(polygon.center.x, polygon.center.y);
 			context.rotate(rX*2*Math.PI*SPEED);
 			context.moveTo(this.points[0].x-polygon.center.x, this.points[0].y- polygon.center.y);
 			$(this.points).each(function () {
@@ -91,11 +107,15 @@ $(document).ready(function(){
 			context.fill();
 			context.restore();
 		});
+		//
+		// if PLAYING, then Draw again, and again !!!
 		if(PLAYING){
 			window.requestAnimationFrame(Draw);
 		}
 	}
 	function UpdateTimer(){
+		//
+		// update the timeline and time
 		time = Date.now()%(DAY_IN_MS);
 		seconds.val(parseInt((time/1000)% HOUR_IN_SECONDS));
 	}
