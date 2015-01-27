@@ -1,0 +1,15 @@
+{
+  "name": "facetime",
+  "version": "0.0.0",
+  "description": "Facetime Orleanoide",
+  "main": "index.js",
+  "keywords": [
+    "orleanoide",
+    "triangle"
+  ],
+  "author": "Chloe Maurand",
+  "license": "Art Libre",
+  "dependencies": {
+    "xml2js": "^0.4.4"
+  }
+}
