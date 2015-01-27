@@ -9,7 +9,7 @@ FaceTime est un projet qui a été mené dans le cadre du festival Orléanoïde,
 
 ## installation
 
-pour installer le projet en local, il faut avoir installer :
+pour installer le projet en local, il faut avoir installé :
 
 - node js
 - bower
