@@ -58,9 +58,9 @@ $(document).ready(function(){
 		console.log($(polygons).length);
 		//
 		$(polygons).each(function(){
-			var points = [];
 			//
-			// convert string data to floating number points
+			// convert string data to floating number points array
+			var points = [];
 			$(this.points.split(' ')).each(function(p){
 				var point = this.split(','),
 					x = parseFloat(point[0]),
@@ -69,6 +69,7 @@ $(document).ready(function(){
 					points[p] = {x:x,y:y};
 				}
 			});
+			this.points = points;
 			//
 			// assign a random center to the polygon
 			this.center = {x:canvas.width*Math.random(),y:canvas.height*Math.random()};
