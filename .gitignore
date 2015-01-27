@@ -58,5 +58,4 @@ crashlytics-build.properties
 
 .DS_Store
 elements/*
-vendor/*
 
