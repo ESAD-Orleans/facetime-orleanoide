@@ -113,16 +113,19 @@ $(document).ready(function(){
 		var rX = (time%(DAY_IN_MS))/ DAY_IN_MS;
 		//rX = 0;
 		//
-		context.save();
-		context.translate(canvas.width / 2, canvas.height / 2);
-		context.scale(scale,scale);
-		context.translate(-1920 / 2, -1080 / 2);
 		//
 		// draw All triangles
 		$(polygons).each(function () {
 			//
 			var polygon = this;
 			context.save();
+
+			//
+			context.translate(canvas.width / 2, canvas.height / 2);
+			context.scale(scale, scale);
+			context.translate(-1920 / 2, -1080 / 2);
+			//
+
 			context.beginPath();
 			context.fillStyle = polygon.fill;
 			context.translate(polygon.center.x, polygon.center.y);
@@ -135,7 +138,6 @@ $(document).ready(function(){
 			context.fill();
 			context.restore();
 		});
-		context.restore();
 		//
 		// if PLAYING, then Draw again, and again !!!
 		if(PLAYING){
