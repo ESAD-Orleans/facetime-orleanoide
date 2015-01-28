@@ -17,6 +17,9 @@ $(document).ready(function(){
 		DAY_IN_SECONDS = HOUR_IN_SECONDS*24,
 		DAY_IN_MS = DAY_IN_SECONDS*1000,
 		//
+		IMAGE_WIDTH = 1920,
+		IMAGE_HEIGHT = 1080,
+		//
 		timeOffset = 0,
 		//
 		//
@@ -59,8 +62,8 @@ $(document).ready(function(){
 		canvas.width = $(canvas).width();
 		canvas.height = $(canvas).height();
 		//
-		scaleX = canvas.width/1920;
-		scaleY = canvas.height/1080;
+		scaleX = canvas.width/IMAGE_WIDTH;
+		scaleY = canvas.height/IMAGE_HEIGHT;
 		scale = scaleY;
 		//scale = scaleX > scaleY ? scaleX : scaleY;
 	}
@@ -100,7 +103,7 @@ $(document).ready(function(){
 			this.group = Math.floor(Math.random()*3);
 			//
 			// assign a random center to the polygon
-			this.center = {x:canvas.width*Math.random(),y:canvas.height*Math.random()};
+			this.center = {x:IMAGE_WIDTH*Math.random(),y:IMAGE_HEIGHT*Math.random()};
 			//
 		});
 		//
@@ -123,7 +126,7 @@ $(document).ready(function(){
 			//
 			context.translate(canvas.width / 2, canvas.height / 2);
 			context.scale(scale, scale);
-			context.translate(-1920 / 2, -1080 / 2);
+			context.translate(-IMAGE_WIDTH / 2, -IMAGE_HEIGHT / 2);
 			//
 
 			context.beginPath();
