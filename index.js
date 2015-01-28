@@ -56,8 +56,8 @@ $(document).ready(function(){
 	// Resize
 	function Resize(){
 		//
-		canvas.width = $('html,body').width();
-		canvas.height = $('html,body').height();
+		canvas.width = $(canvas).width();
+		canvas.height = $(canvas).height();
 		//
 		scaleX = canvas.width/1920;
 		scaleY = canvas.height/1080;
