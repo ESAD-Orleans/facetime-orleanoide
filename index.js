@@ -17,6 +17,7 @@ $(document).ready(function(){
 		DAY_IN_SECONDS = HOUR_IN_SECONDS*24,
 		DAY_IN_MS = DAY_IN_SECONDS*1000,
 		//
+		//
 		IMAGE_WIDTH = 1920,
 		IMAGE_HEIGHT = 1080,
 		//
@@ -27,6 +28,7 @@ $(document).ready(function(){
 		//
 		// starting values
 		SPEED = 2,
+		TIME_OFFSET = new Date(2015,0,29,0,0,0,0).getTime() % (DAY_IN_MS / SPEED),
 		PLAYING_STATE = true,
 		PLAYING = true;
 	//
@@ -69,7 +71,8 @@ $(document).ready(function(){
 	}
 	//
 	$('button').click(function(){
-		timeOffset = $(this).is('.offsetReset') ? (new Date()).getTime() : 0;
+		timeOffset = $(this).is('.offsetReset') ? (new Date()).getTime()%(DAY_IN_MS/SPEED) : TIME_OFFSET;
+		console.log(timeOffset)
 		return false;
 	})
 	//
@@ -79,6 +82,7 @@ $(document).ready(function(){
 		// setup the canvas
 		canvas = $('canvas').get(0);
 		context = canvas.getContext('2d');
+		$('button.realtime').click();
 		//
 		//
 		$(window).resize(Resize);
@@ -100,7 +104,7 @@ $(document).ready(function(){
 				}
 			});
 			this.points = points;
-			this.group = Math.floor(Math.random()*3);
+			this.group = Math.floor(Math.random()* SPEEDS.length);
 			//
 			// assign a random center to the polygon
 			this.center = {x:IMAGE_WIDTH*Math.random(),y:IMAGE_HEIGHT*Math.random()};
@@ -113,7 +117,7 @@ $(document).ready(function(){
 	function Draw(){
 		UpdateTimer();
 		context.clearRect(0,0,canvas.width,canvas.height);
-		var rX = (time%(DAY_IN_MS))/ DAY_IN_MS;
+		var rX = SPEED * (time%(DAY_IN_MS))/ DAY_IN_MS;
 		//rX = 0;
 		//
 		//
@@ -152,6 +156,7 @@ $(document).ready(function(){
 		// update the timeline and time
 		var lastTime = time;
 		time = (Date.now()- timeOffset)%(DAY_IN_MS);
+		//console.log(time, DAY_IN_SECONDS);
 		var renderTime = time-lastTime;
 		fpsCount ++;
 		fpsVal += renderTime;
