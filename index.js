@@ -56,14 +56,13 @@ $(document).ready(function(){
 	// Resize
 	function Resize(){
 		//
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
+		canvas.width = $('html,body').width();
+		canvas.height = $('html,body').height();
 		//
 		scaleX = canvas.width/1920;
 		scaleY = canvas.height/1080;
 		scale = scaleY;
 		//scale = scaleX > scaleY ? scaleX : scaleY;
-		console.log(scale);
 	}
 	//
 	$('button').click(function(){
@@ -78,7 +77,6 @@ $(document).ready(function(){
 		canvas = $('canvas').get(0);
 		context = canvas.getContext('2d');
 		//
-		console.log(timeOffset);
 		//
 		$(window).resize(Resize);
 		Resize();
