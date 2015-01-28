@@ -17,8 +17,13 @@ $(document).ready(function(){
 		DAY_IN_SECONDS = HOUR_IN_SECONDS*24,
 		DAY_IN_MS = DAY_IN_SECONDS*1000,
 		//
+		timeOffset = 0,
+		//
+		//
+		SPEEDS = [1,12,720],
+		//
 		// starting values
-		SPEED = 1,
+		SPEED = 2,
 		PLAYING_STATE = true,
 		PLAYING = true;
 	//
@@ -32,6 +37,12 @@ $(document).ready(function(){
 		seconds = $('#seconds'),
 		speed = $('#speed'),
 		playing = $('#playing'),
+		framerate = $('#framerate'),
+		fpsUpdateDisplayPerSecond = 4,
+		fpsVal = 0,
+		fpsCount = 0,
+		scale = 1,
+		scaleX = 1, scaleY = 1,
 
 		time = 0
 		;
@@ -42,9 +53,22 @@ $(document).ready(function(){
 		Setup();
 	});
 	//
-	// input change binding
-	speed.on('change',function(){
-		SPEED = speed.val();
+	// Resize
+	function Resize(){
+		//
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		//
+		scaleX = canvas.width/1920;
+		scaleY = canvas.height/1080;
+		scale = scaleY;
+		//scale = scaleX > scaleY ? scaleX : scaleY;
+		console.log(scale);
+	}
+	//
+	$('button').click(function(){
+		timeOffset = $(this).is('.offsetReset') ? (new Date()).getTime() : 0;
+		return false;
 	})
 	//
 	// App Setup, after polygons data loading
@@ -53,6 +77,11 @@ $(document).ready(function(){
 		// setup the canvas
 		canvas = $('canvas').get(0);
 		context = canvas.getContext('2d');
+		//
+		console.log(timeOffset);
+		//
+		$(window).resize(Resize);
+		Resize();
 		//
 		// display in browser console the number of triangles
 		console.log($(polygons).length);
@@ -70,17 +99,11 @@ $(document).ready(function(){
 				}
 			});
 			this.points = points;
+			this.group = Math.floor(Math.random()*3);
 			//
 			// assign a random center to the polygon
 			this.center = {x:canvas.width*Math.random(),y:canvas.height*Math.random()};
 			//
-		});
-		//
-		// bind playing button
-		playing.on('change',function(){
-			PLAYING_STATE = PLAYING;
-			PLAYING = playing.is(':checked');
-			Draw();
 		});
 		//
 		// initial Drawing
@@ -89,7 +112,13 @@ $(document).ready(function(){
 	function Draw(){
 		UpdateTimer();
 		context.clearRect(0,0,canvas.width,canvas.height);
-		var rX = (time%(HOUR_IN_MS))/ HOUR_IN_MS;
+		var rX = (time%(DAY_IN_MS))/ DAY_IN_MS;
+		//rX = 0;
+		//
+		context.save();
+		context.translate(canvas.width / 2, canvas.height / 2);
+		context.scale(scale,scale);
+		context.translate(-1920 / 2, -1080 / 2);
 		//
 		// draw All triangles
 		$(polygons).each(function () {
@@ -99,7 +128,7 @@ $(document).ready(function(){
 			context.beginPath();
 			context.fillStyle = polygon.fill;
 			context.translate(polygon.center.x, polygon.center.y);
-			context.rotate(rX*2*Math.PI*SPEED);
+			context.rotate(rX*2*Math.PI*SPEEDS[polygon.group]);
 			context.moveTo(this.points[0].x-polygon.center.x, this.points[0].y- polygon.center.y);
 			$(this.points).each(function () {
 				context.lineTo(this.x- polygon.center.x, this.y- polygon.center.y);
@@ -108,6 +137,7 @@ $(document).ready(function(){
 			context.fill();
 			context.restore();
 		});
+		context.restore();
 		//
 		// if PLAYING, then Draw again, and again !!!
 		if(PLAYING){
@@ -117,8 +147,16 @@ $(document).ready(function(){
 	function UpdateTimer(){
 		//
 		// update the timeline and time
-		time = Date.now()%(DAY_IN_MS);
-		seconds.val(parseInt((time/1000)% HOUR_IN_SECONDS));
+		var lastTime = time;
+		time = (Date.now()- timeOffset)%(DAY_IN_MS);
+		var renderTime = time-lastTime;
+		fpsCount ++;
+		fpsVal += renderTime;
+		if(fpsVal>1000/fpsUpdateDisplayPerSecond){
+			framerate.text(Math.round(fpsCount * fpsUpdateDisplayPerSecond));
+			fpsVal %= fpsVal % (1000/fpsUpdateDisplayPerSecond);
+			fpsCount = 0;
+		}
 	}
 
 });

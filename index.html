@@ -2,63 +2,22 @@
 <html>
 <head lang="en">
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0" >
 	<title></title>
 	<script src="vendor/jquery/jquery.js"></script>
 	<script src="vendor/seedrandom/seedrandom.js"></script>
 	<script src="index.js"></script>
 </head>
-<style>
-	body{
-		background: #eee;
-		font-family: "Verdana", sans-serif;
-	}
-	canvas{
-		background: #000;
-		width:100%;
-		height:auto;
-	}
-	#seconds,#speed{
-		width:100%;
-	}
-	#playing{
-		display: none;
-		appearance: none;
-		-webkit-appearance:none;
-		width:100%;
-		height:40px;
-		background:#000;
-	}
-	.playing{
-		display: block;
-		text-align: center;
-		width:100%;
-		text-transform: uppercase;
-	}
-
-	.playing span{
-		padding: 10px;
-		display: inline-block;
-		background: #fff;
-		color:#000;
-		min-width: 200px;
-	}
-
-	.playing .pause{
-		display: none;
-	}
-	#playing:checked ~.play{
-		display: none;
-	}
-	#playing:checked ~.pause{
-		display: inline-block;
-	}
-</style>
+<link href="styles.css" rel="stylesheet"/>
 <body>
+
 <canvas width="1920" height="1080"></canvas>
-timeline (sur une heure)
-<input id="seconds" name="seconds" type="range" value="0" min="0" max="3600"/>
-nombre de rotation par heure (de 1 à 500)
-<input id="speed" name="seconds" type="range" value="1" min="1" max="500"/>
-<label class="playing"><input id="playing" name="playing" type="checkbox" checked/><span class="play">play</span><span class="pause">pause</span></label>
+
+<form>
+	<label id="framerate"></label>
+	<button class="offsetReset">OFFSET 0</button>
+	<button class="realtime">REALTIME</button>
+</form>
+
 </body>
 </html>
