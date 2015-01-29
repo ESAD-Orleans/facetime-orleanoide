@@ -20,6 +20,7 @@ form {
   position: absolute;
   right: 20px;
   top: 20px;
+  display: none;
 }
 form button {
   font-family: courier, monospace;
