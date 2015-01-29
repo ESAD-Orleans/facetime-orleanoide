@@ -72,8 +72,8 @@ $(document).ready(function(){
 	// Resize
 	function Resize(){
 		//
-		canvas.width = $(canvas).width();
-		canvas.height = $(canvas).height();
+		canvas.width = $(canvas).width()*window.getDevicePixelRatio();
+		canvas.height = $(canvas).height()*window.getDevicePixelRatio();
 		//
 		scaleX = canvas.width/IMAGE_WIDTH;
 		scaleY = canvas.height/IMAGE_HEIGHT;
