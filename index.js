@@ -85,10 +85,9 @@ $(document).ready(function(){
 		context = canvas.getContext('2d');
 		$('button.realtime').click();
 		//
-		full(canvas);
 		$('canvas').click(function(){
 			if (screenfull.enabled) {
-				screenfull.request();
+				screenfull.request(canvas);
 			}else{
 				screenfull.exit();
 			}
