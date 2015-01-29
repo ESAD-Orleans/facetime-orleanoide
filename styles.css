@@ -23,12 +23,12 @@ form {
 }
 form button {
   font-family: courier, monospace;
-  height: 40px;
-  font-size: 22px;
-  line-height: 40px;
   border: none;
   background: #fff;
   color: #666;
+  height: 40px;
+  font-size: 22px;
+  line-height: 40px;
   border-radius: 10px;
   margin: 0 0 0 20px;
   padding: 0 16px;
@@ -37,6 +37,16 @@ form button {
 form button:hover,
 form button:focus {
   background: #ccc;
+}
+@media screen and (max-width: 640px) {
+  form button {
+    height: 20px;
+    font-size: 12px;
+    line-height: 20px;
+    border-radius: 4px;
+    margin: 0 0 0 5px;
+    padding: 0 4px;
+  }
 }
 #framerate {
   color: #fff;
