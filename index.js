@@ -8,17 +8,6 @@ window.requestAnimFrame = (function () {
 	};
 })();
 //
-function full(el) {
-
-	if (el.webkitRequestFullScreen) {
-		el.webkitRequestFullScreen();
-	}
-	else {
-		el.mozRequestFullScreen();
-	}
-
-	console.log('fullscreen!');
-}
 
 $(document).ready(function(){
 	//
@@ -98,7 +87,11 @@ $(document).ready(function(){
 		//
 		full(canvas);
 		$('canvas').click(function(){
-			full(this);
+			if (screenfull.enabled) {
+				screenfull.request();
+			}else{
+				screenfull.exit();
+			}
 		});
 
 		//
