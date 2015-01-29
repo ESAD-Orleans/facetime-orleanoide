@@ -1,5 +1,4 @@
 body {
-  background: #eee;
   font-family: "Verdana", sans-serif;
 }
 html,
@@ -10,6 +9,7 @@ body {
   height: 100%;
   overflow: hidden;
   position: fixed;
+  background: #000;
 }
 canvas {
   background: #000;
@@ -22,12 +22,16 @@ form {
   top: 20px;
 }
 form button {
-  height: 30px;
+  font-family: courier, monospace;
+  height: 40px;
+  font-size: 22px;
+  line-height: 40px;
   border: none;
   background: #fff;
   color: #666;
   border-radius: 10px;
   margin: 0 0 0 20px;
+  padding: 0 16px;
   outline: none;
 }
 form button:hover,

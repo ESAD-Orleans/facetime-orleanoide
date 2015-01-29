@@ -8,6 +8,17 @@ window.requestAnimFrame = (function () {
 	};
 })();
 //
+function full(el) {
+
+	if (el.webkitRequestFullScreen) {
+		el.webkitRequestFullScreen();
+	}
+	else {
+		el.mozRequestFullScreen();
+	}
+
+	console.log('fullscreen!');
+}
 
 $(document).ready(function(){
 	//
@@ -76,6 +87,7 @@ $(document).ready(function(){
 		return false;
 	})
 	//
+	//
 	// App Setup, after polygons data loading
 	function Setup(){
 		//
@@ -83,6 +95,12 @@ $(document).ready(function(){
 		canvas = $('canvas').get(0);
 		context = canvas.getContext('2d');
 		$('button.realtime').click();
+		//
+		full(canvas);
+		$('canvas').click(function(){
+			full(this);
+		});
+
 		//
 		//
 		$(window).resize(Resize);
